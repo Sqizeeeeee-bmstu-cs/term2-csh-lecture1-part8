@@ -1,6 +1,4 @@
 
-using System.Runtime.CompilerServices;
-
 public class Book
 {
     public string Title { get; init; }
@@ -23,6 +21,10 @@ public class Book
 
     public required string Genre {get; init; }
 
+    private static int _totalCount = 0;
+
+    public static int TotalCount => _totalCount;
+
     public int AgeInYears => DateTime.Now.Year - Year;
 
     public string ShortDescription 
@@ -37,6 +39,7 @@ public class Book
         Year = year;
         PageCount = pageCount;
         Genre = genre;
+        _totalCount++;
     }
 
     public Book(string title, string author, string genre = "") : this (title, author, 2026, 0, genre) {}
@@ -70,6 +73,11 @@ public class Book
             return ShortDescription;
         }
         return GetInfo();
+    }
+
+    public static void PrintStatistics()
+    {
+        Console.WriteLine($"Всего создано книг: {_totalCount}");
     }
 
     ~Book()
