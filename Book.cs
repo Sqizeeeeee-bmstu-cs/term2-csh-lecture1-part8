@@ -60,10 +60,7 @@ public class Book
         {
             return PrintShortInfo();
         }
-
         return GetInfo();
-
-        
     }
 
 }
