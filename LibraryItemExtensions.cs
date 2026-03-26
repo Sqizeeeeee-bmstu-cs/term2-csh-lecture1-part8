@@ -22,7 +22,7 @@ public static class LibraryItemExtensions
         }
         else
         {
-            throw new ArgumentException("don't know the item");
+            throw new InvalidBookDataException("don't know the item");
         }
     }
     public static void PrintCard(this LibraryItem item)

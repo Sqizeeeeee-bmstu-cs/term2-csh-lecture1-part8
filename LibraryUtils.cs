@@ -1,7 +1,5 @@
 
 
-using System.ComponentModel.Design.Serialization;
-
 static class LibraryUtils
 {
     public static readonly DateTime StartupTime = DateTime.Now;

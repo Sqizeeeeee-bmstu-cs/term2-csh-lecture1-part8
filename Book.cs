@@ -7,15 +7,10 @@ public class Book : LibraryItem
 
     public int PageCount
     {
-        get { return _pageCount; }
-        set
-        {
-            if (value > MaxPageCount || value <= 0)
-            {
-                throw new ArgumentException("Превышено максимальное кол-во страниц");
-            }
-            _pageCount = value;
-        }
+        get => _pageCount;
+        set => _pageCount = value > 0 && value <= MaxPageCount 
+            ? value 
+            : throw new InvalidBookDataException("Количество страниц должно быть от 1 до 10000");
     }
 
     public override string GetCardInfo()

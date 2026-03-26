@@ -11,15 +11,8 @@ public abstract class LibraryItem
 
     public int Year
     {
-        get { return _year; }
-        set
-        {
-            if (value > DateTime.Now.Year || value < MinYear)
-            {
-                throw new ArgumentException("Год должен быть от 1450 до текущего");
-            }
-            _year = value;
-        }
+        get => _year;
+        set => _year = (value <= DateTime.Now.Year && value >= MinYear) ? value : throw new InvalidBookDataException("Год должен быть от 1450 до текущего");
     }
 
     private static int _totalItems = 0;
