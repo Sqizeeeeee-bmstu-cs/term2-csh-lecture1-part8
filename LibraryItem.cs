@@ -1,5 +1,5 @@
 
-public class LibraryItem
+public abstract class LibraryItem
 {
     public const int MinYear = 1450;
 
@@ -30,6 +30,7 @@ public class LibraryItem
         Year = year;
         _totalItems++;
     }
+    public abstract string GetCardInfo();
 
     public virtual string GetInfo()
     {
