@@ -9,7 +9,7 @@ public class Book
         get { return _year; }
         set
         {
-            if (value > DateTime.Now.Year || value < 1450)
+            if (value > DateTime.Now.Year || value < MinYear)
             {
                 throw new ArgumentException("Год должен быть от 1450 до текущего");
             }
@@ -17,7 +17,20 @@ public class Book
         }
     }
     
-    public int PageCount {get; set; }
+    private int _pageCount = 0;
+
+    public int PageCount
+    {
+        get { return _pageCount; }
+        set
+        {
+            if (value > MaxPageCount || value <= 0)
+            {
+                throw new ArgumentException("Превышено максимальное кол-во страниц");
+            }
+            _pageCount = value;
+        }
+    }
 
     public required string Genre {get; init; }
 
@@ -26,6 +39,9 @@ public class Book
     public static int TotalCount => _totalCount;
 
     public int AgeInYears => DateTime.Now.Year - Year;
+
+    public const int MinYear = 1450;
+    public const int MaxPageCount = 10000;
 
     public string ShortDescription 
     {

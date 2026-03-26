@@ -1,10 +1,12 @@
 
 
-using System.IO.Pipelines;
-using System.Security.Authentication.ExtendedProtection;
+using System.ComponentModel.Design.Serialization;
 
 static class LibraryUtils
 {
+    public static readonly DateTime StartupTime = DateTime.Now;
+    public const string LibraryName = "Городская библиотека";
+
     public static void PrintSeparator(char symbol = '-', int count = 40)
     {
         Console.WriteLine(new string(symbol, count));
