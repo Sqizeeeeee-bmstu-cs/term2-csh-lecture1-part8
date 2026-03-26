@@ -1,21 +1,7 @@
 
-public class Book
+public class Book : LibraryItem
 {
-    public string Title { get; init; }
     public string Author { get; init; }
-    private int _year;
-    public int Year
-    {
-        get { return _year; }
-        set
-        {
-            if (value > DateTime.Now.Year || value < MinYear)
-            {
-                throw new ArgumentException("Год должен быть от 1450 до текущего");
-            }
-            _year = value;
-        }
-    }
     
     private int _pageCount = 0;
 
@@ -34,13 +20,8 @@ public class Book
 
     public required string Genre {get; init; }
 
-    private static int _totalCount = 0;
-
-    public static int TotalCount => _totalCount;
-
     public int AgeInYears => DateTime.Now.Year - Year;
 
-    public const int MinYear = 1450;
     public const int MaxPageCount = 10000;
 
     public string ShortDescription 
@@ -48,21 +29,18 @@ public class Book
         get { return $"{Title} - {Author} ({Year})"; }
     }
 
-    public Book(string title, string author, int year, int pageCount, string genre)
+    public Book(string title, string author, int year, int pageCount, string genre) : base(title, year)
     {
-        Title = title;
         Author = author;
-        Year = year;
         PageCount = pageCount;
         Genre = genre;
-        _totalCount++;
     }
 
     public Book(string title, string author, string genre = "") : this (title, author, 2026, 0, genre) {}
 
     public Book() : this ("", "", "") {}
 
-    public string GetInfo()
+    public override string GetInfo()
     {
         return $"book: {Title}, author: {Author}, year: {Year}, pages: {PageCount}";
     }
@@ -89,11 +67,6 @@ public class Book
             return ShortDescription;
         }
         return GetInfo();
-    }
-
-    public static void PrintStatistics()
-    {
-        Console.WriteLine($"Всего создано книг: {_totalCount}");
     }
 
     ~Book()

@@ -1,41 +1,33 @@
-﻿// Вывод информации о библиотеке
-Console.WriteLine($"Библиотека: {LibraryUtils.LibraryName}");
-Console.WriteLine($"Время запуска: {LibraryUtils.StartupTime}");
-LibraryUtils.PrintSeparator();
+﻿using System;
 
-// Создание книг
-Book book1 = new Book("Война и мир", "Л. Толстой", 1869, 1225, "Роман") {Genre = "Роман"};
-Book book2 = new Book("Мастер и Маргарита", "М. Булгаков", 1967, 480, "Роман") {Genre = "Роман"};
-Book book3 = new Book("1984", "Дж. Оруэлл", 1949, 328, "Антиутопия") {Genre = "Антиутопия"};
-
-Book[] books = { book1, book2, book3 };
-
-// Статистика
-Console.WriteLine("\n=== Статистика ===\n");
-Book.PrintStatistics();
-
-// Тестирование LibraryUtils
-Console.WriteLine("\n=== Список книг ===\n");
-Console.WriteLine(LibraryUtils.FormatBookLists(books));
-
-LibraryUtils.PrintSeparator();
-
-Console.WriteLine("\n=== Самая старая книга ===\n");
-Book oldest = LibraryUtils.FindOldest(books);
-Console.WriteLine(oldest.ShortDescription);
-
-// Тестирование финализатора
-Console.WriteLine("\n=== Финализатор ===\n");
-static void CreateBooks()
+// Создание массива LibraryItem
+LibraryItem[] items = 
 {
-    Book temp1 = new Book("Преступление и наказание", "Ф. Достоевский", 1866, 672, "Роман") {Genre = "Роман"};
-    Book temp2 = new Book("Евгений Онегин", "А. Пушкин", 1833, 384, "Роман") {Genre = "Роман"};
-    Console.WriteLine("Временные книги созданы");
+    new Book("Война и мир", "Л. Толстой", 1869, 1225, "Роман") {Genre = "Роман"},
+    new Magazine("Наука и жизнь", 2024, 12, "Наука-пресс"),
+    new Book("Мастер и Маргарита", "М. Булгаков", 1967, 480, "Роман") {Genre = "Роман"},
+    new Magazine("Вокруг света", 2023, 5, "Издательский дом")
+};
+
+Console.WriteLine("=== Список всех изданий ===\n");
+
+foreach (var item in items)
+{
+    Console.WriteLine(item.GetInfo());
+    
+    // Проверка типа с помощью is
+    if (item is Book)
+    {
+        // Приведение с помощью as
+        Book book = item as Book;
+        Console.WriteLine($"  -> Книга, автор: {book?.Author}");
+    }
+    else if (item is Magazine)
+    {
+        Magazine magazine = item as Magazine;
+        Console.WriteLine($"  -> Журнал, выпуск: {magazine?.IssueNumber}");
+    }
 }
 
-CreateBooks();
-GC.Collect();
-GC.WaitForPendingFinalizers();
-
-Console.WriteLine("\n=== Итоговая статистика ===\n");
-Book.PrintStatistics();
+Console.WriteLine($"\n=== Статистика ===\n");
+Console.WriteLine($"Всего изданий: {LibraryItem.TotalItems}");
