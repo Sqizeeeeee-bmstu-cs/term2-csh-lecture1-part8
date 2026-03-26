@@ -18,6 +18,11 @@ public class Book : LibraryItem
         }
     }
 
+    public override string GetCardInfo()
+    {
+        return $"{Title}, {Author}, {Year}, - {PageCount}";
+    }
+
     public required string Genre {get; init; }
 
     public int AgeInYears => DateTime.Now.Year - Year;

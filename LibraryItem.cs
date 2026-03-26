@@ -5,6 +5,8 @@ public abstract class LibraryItem
 
     public string Title { get; init;}
 
+    public virtual string Description => GetInfo();
+
     private int _year;
 
     public int Year

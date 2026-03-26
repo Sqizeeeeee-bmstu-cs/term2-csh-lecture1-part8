@@ -1,6 +1,5 @@
 ﻿using System;
 
-// Создание массива LibraryItem
 LibraryItem[] items = 
 {
     new Book("Война и мир", "Л. Толстой", 1869, 1225, "Роман") {Genre = "Роман"},
@@ -9,25 +8,13 @@ LibraryItem[] items =
     new Magazine("Вокруг света", 2023, 5, "Издательский дом")
 };
 
-Console.WriteLine("=== Список всех изданий ===\n");
+Console.WriteLine("=== Демонстрация полиморфизма ===\n");
 
 foreach (var item in items)
 {
-    Console.WriteLine(item.GetInfo());
-    
-    // Проверка типа с помощью is
-    if (item is Book)
-    {
-        // Приведение с помощью as
-        Book book = item as Book;
-        Console.WriteLine($"  -> Книга, автор: {book?.Author}");
-    }
-    else if (item is Magazine)
-    {
-        Magazine magazine = item as Magazine;
-        Console.WriteLine($"  -> Журнал, выпуск: {magazine?.IssueNumber}");
-    }
+    Console.WriteLine($"--- {item.GetType().Name} ---");
+    Console.WriteLine($"GetInfo(): {item.GetInfo()}");
+    Console.WriteLine($"GetCardInfo(): {item.GetCardInfo()}");
+    Console.WriteLine($"Description: {item.Description}");
+    Console.WriteLine();
 }
-
-Console.WriteLine($"\n=== Статистика ===\n");
-Console.WriteLine($"Всего изданий: {LibraryItem.TotalItems}");

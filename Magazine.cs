@@ -11,7 +11,8 @@ public class Magazine : LibraryItem
         Publisher = publisher;
     }
 
-    public override string GetInfo()
+
+    public override string GetCardInfo()
     {
         return $"{Title} ({Year}), выпуск {IssueNumber}, издательство: {Publisher}";
     }
