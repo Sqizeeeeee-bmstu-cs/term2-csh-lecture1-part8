@@ -1,5 +1,7 @@
 
-public class Book : LibraryItem
+
+
+public class Book : LibraryItem, IContentSearch, IExportable
 {
     public string Author { get; init; }
     
@@ -67,6 +69,21 @@ public class Book : LibraryItem
             return ShortDescription;
         }
         return GetInfo();
+    }
+
+    public bool ContainsKeyword(string word)
+    {
+        return Title.Contains(word, StringComparison.OrdinalIgnoreCase) || Author.Contains(word, StringComparison.OrdinalIgnoreCase);
+    }
+
+    public string ToCSV()
+    {
+        return $"book;{Title};{Author};{Year};{PageCount};{Genre}";
+    }
+
+    string IExportable.ToJson()
+    {
+        return $"{{\"type\":\"Book\",\"title\":\"{Title}\",\"author\":\"{Author}\",\"year\":{Year},\"pageCount\":{PageCount},\"genre\":\"{Genre}\"}}";
     }
 
     ~Book()
