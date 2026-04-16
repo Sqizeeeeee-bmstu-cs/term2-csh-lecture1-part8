@@ -46,4 +46,26 @@ public partial class Library
         return res;
     }
 
+    public List<LibraryItem> Search(string keyword, SearchOptions options = SearchOptions.All)
+    {
+        var results = new List<LibraryItem>();
+        
+        foreach (var item in _items)
+        {
+            bool match = false;
+            
+            if (options.HasFlag(SearchOptions.ByTitle))
+                match = match || item.Title.Contains(keyword, StringComparison.OrdinalIgnoreCase);
+            
+            if (options.HasFlag(SearchOptions.ByAuthor) && item is Book book)
+                match = match || book.Author.Contains(keyword, StringComparison.OrdinalIgnoreCase);
+            
+            if (options.HasFlag(SearchOptions.ByPublisher) && item is Magazine magazine)
+                match = match || magazine.Publisher.Contains(keyword, StringComparison.OrdinalIgnoreCase);
+            
+            if (match) results.Add(item);
+        }
+        
+        return results;
+    }
 }

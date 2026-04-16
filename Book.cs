@@ -20,7 +20,19 @@ public class Book : LibraryItem, IContentSearch, IExportable
         return $"{Title}, {Author}, {Year}, - {PageCount}";
     }
 
-    public required string Genre {get; init; }
+    public BookGenre Genre {get; init; } = BookGenre.Unknown;
+
+    public string GenreRu => Genre switch
+    {
+        BookGenre.Novel => "Роман",
+        BookGenre.SciFi => "Фантастика",
+        BookGenre.Detective => "Детектив",
+        BookGenre.History => "История",
+        BookGenre.Unknown => "Неизвестно",
+        _ => "Неизвестно"
+    };
+
+    public ItemStatus Status { get; set; } = ItemStatus.Availiable;
 
     public int AgeInYears => DateTime.Now.Year - Year;
 
@@ -31,16 +43,16 @@ public class Book : LibraryItem, IContentSearch, IExportable
         get { return $"{Title} - {Author} ({Year})"; }
     }
 
-    public Book(string title, string author, int year, int pageCount, string genre) : base(title, year)
+    public Book(string title, string author, int year, int pageCount, BookGenre genre) : base(title, year)
     {
         Author = author;
         PageCount = pageCount;
         Genre = genre;
     }
 
-    public Book(string title, string author, string genre = "") : this (title, author, 2026, 0, genre) {}
+    public Book(string title, string author, BookGenre genre) : this (title, author, 2026, 0, genre) {}
 
-    public Book() : this ("", "", "") {}
+    public Book() : this ("", "", BookGenre.Unknown) {}
 
     public override string GetInfo()
     {

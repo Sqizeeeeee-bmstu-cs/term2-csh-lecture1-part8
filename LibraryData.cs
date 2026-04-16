@@ -1,8 +1,5 @@
-
-
 public partial class Library
 {
-    
     private List<LibraryItem> _items = new List<LibraryItem>();
 
     public void Add(LibraryItem item)
@@ -26,7 +23,7 @@ public partial class Library
         string author = "";
         int year = 0;
         int pageCount = 0;
-        string genre = "";
+        BookGenre genre = BookGenre.Unknown;
         
         // Ввод названия
         while (true)
@@ -75,7 +72,7 @@ public partial class Library
                 if (!int.TryParse(Console.ReadLine(), out year))
                     throw new InvalidBookDataException("Год должен быть числом");
                 
-                Book temp = new Book("temp", "temp", year, 1, "temp") {Genre = "temp"};
+                Book temp = new Book("temp", "temp", year, 1, BookGenre.Unknown);
                 break;
             }
             catch (InvalidBookDataException ex) when (ex.Message.Contains("Год"))
@@ -97,7 +94,7 @@ public partial class Library
                 if (!int.TryParse(Console.ReadLine(), out pageCount))
                     throw new InvalidBookDataException("Количество страниц должно быть числом");
                 
-                Book temp = new Book("temp", "temp", 2000, pageCount, "temp") {Genre = "temp"};
+                Book temp = new Book("temp", "temp", 2000, pageCount, BookGenre.Unknown);
                 break;
             }
             catch (InvalidBookDataException ex) when (ex.Message.Contains("страниц"))
@@ -115,24 +112,29 @@ public partial class Library
         {
             try
             {
-                Console.Write("Введите жанр: ");
-                genre = Console.ReadLine()?.Trim() ?? "";
+                Console.Write("Введите жанр (Novel, SciFi, Detective, History): ");
+                string genreInput = Console.ReadLine()?.Trim() ?? "";
                 
-                if (string.IsNullOrWhiteSpace(genre))
+                if (string.IsNullOrWhiteSpace(genreInput))
                     throw new InvalidBookDataException("Жанр не может быть пустым");
                 
+                genre = Enum.Parse<BookGenre>(genreInput, true);
                 break;
             }
             catch (InvalidBookDataException ex) when (ex.Message.Contains("пустым"))
             {
                 Console.WriteLine($"Ошибка: {ex.Message}. Попробуйте снова.");
             }
+            catch (ArgumentException)
+            {
+                Console.WriteLine("Ошибка: неверный жанр. Попробуйте снова.");
+            }
         }
         
         // Создание и добавление книги
         try
         {
-            Book book = new Book(title, author, year, pageCount, genre) {Genre = genre};
+            Book book = new Book(title, author, year, pageCount, genre);
             Add(book);
             Console.WriteLine($"\n✓ Книга \"{title}\" успешно добавлена!");
         }
@@ -141,5 +143,4 @@ public partial class Library
             Console.WriteLine($"\n❌ Ошибка при создании книги: {ex.Message}");
         }
     }
-
 }

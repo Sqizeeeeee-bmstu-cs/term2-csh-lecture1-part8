@@ -3,6 +3,7 @@ public class Magazine : LibraryItem, IContentSearch, IExportable
 {
     public int IssueNumber { get; init; }
     public string Publisher { get; init; }
+    public ItemStatus Status { get; set; } = ItemStatus.Availiable;
 
     public Magazine(string title, int year, int issueNumber, string publisher) 
     : base(title, year)
